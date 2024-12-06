@@ -1,0 +1,23 @@
+services:
+  nginx:
+    image: registry.access.redhat.com/ubi8/nginx-124
+    entrypoint: nginx
+    container_name: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend:/usr/share/nginx/html:ro
+    ports:
+      - "80:80"
+    depends_on:
+      - tusd
+
+  # https://tus.github.io/tusd/
+  tusd:
+    image: tusproject/tusd
+    container_name: tusd
+    command: >
+      -upload-dir /data
+      -behind-proxy
+      -disable-download
+    volumes:
+      - ./data:/data

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Upload</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="./uppy.min.css" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <noscript>This app requires JavaScript.</noscript>
+
+    <h1>Upload Files</h1>
+    <div id="drag-drop-area"></div>
+
+    <script type="module">
+        import {
+            Uppy,
+            Dashboard,
+            Tus,
+            GoldenRetriever,
+        } from './uppy.min.mjs'
+
+        const uppy = new Uppy({ autoProceed: true })
+            .use(Dashboard, { inline: true, target: '#drag-drop-area' })
+            .use(Tus, { endpoint: 'http://localhost:80/files/' })
+            .use(GoldenRetriever)
+    </script>
+</body>
+
+</html>
