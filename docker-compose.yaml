@@ -1,12 +1,13 @@
 services:
   caddy:
-    # image: caddy
-    build: .
+    build:
+      dockerfile: Dockerfile.caddy
     container_name: caddy
-    command: caddy run --config /etc/caddy/Caddyfile
+    command: run --config /etc/caddy/Caddyfile --watch
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ./static:/static:ro
+      - ./logs:/logs
     ports:
       - "80:80"
       - "443:443"
@@ -14,10 +15,10 @@ services:
       - tusd
 
   tusd:
-    # image: tusproject/tusd
-    build: .
+    build:
+      dockerfile: Dockerfile.tusd
     container_name: tusd
-    command: tusd -upload-dir /data -behind-proxy -disable-download -port 8080
+    command: -upload-dir /data -behind-proxy -disable-download -port 8080
     volumes:
       - ./data:/data
 

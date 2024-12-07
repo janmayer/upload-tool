@@ -37,7 +37,7 @@
         import { Uppy, Dashboard, Tus, GoldenRetriever } from "https://releases.transloadit.com/uppy/v4.8.0/uppy.min.mjs"
         const uppy = new Uppy({ autoProceed: true })
             .use(Dashboard, { inline: true, target: "#drag-drop-area" })
-            .use(Tus, { endpoint: "http://localhost:80/files/" })
+            .use(Tus, { endpoint: "/files/" })
             .use(GoldenRetriever)
     </script>
 

@@ -1,0 +1,7 @@
+FROM golang:alpine AS builder
+RUN go install github.com/tus/tusd/cmd/tusd@latest
+
+
+FROM scratch
+COPY --from=builder /go/bin/tusd /usr/bin/tusd
+ENTRYPOINT [ "/usr/bin/tusd" ]

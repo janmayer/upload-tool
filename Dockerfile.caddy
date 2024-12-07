@@ -1,11 +1,8 @@
 FROM golang:alpine AS builder
-
 RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
 RUN xcaddy build --with github.com/greenpau/caddy-security
 
-RUN go install github.com/tus/tusd/cmd/tusd@latest
 
-
-FROM alpine
+FROM scratch
 COPY --from=builder /go/caddy /usr/bin/caddy
-COPY --from=builder /go/bin/tusd /usr/bin/tusd
+ENTRYPOINT [ "/usr/bin/caddy" ]

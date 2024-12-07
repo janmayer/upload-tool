@@ -46,6 +46,11 @@
 			allow roles admin
 		}
 	}
+
+	log {
+		output file /logs/caddy.log
+		level DEBUG
+	}
 }
 
 http://localhost {
