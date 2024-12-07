@@ -13,7 +13,6 @@ services:
     depends_on:
       - tusd
 
-  # https://tus.github.io/tusd/
   tusd:
     # image: tusproject/tusd
     build: .
