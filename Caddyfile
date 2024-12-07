@@ -1,0 +1,14 @@
+{
+	admin off
+}
+
+http://localhost {
+	root * /static
+	file_server
+
+	reverse_proxy /files/* tusd:8080 {
+		flush_interval -1
+		request_buffers 0
+		response_buffers 0
+	}
+}

@@ -1,23 +1,27 @@
 services:
-  nginx:
-    image: registry.access.redhat.com/ubi8/nginx-124
-    entrypoint: nginx
-    container_name: nginx
+  caddy:
+    # image: caddy
+    build: .
+    container_name: caddy
+    command: caddy run --config /etc/caddy/Caddyfile
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./frontend:/usr/share/nginx/html:ro
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./static:/static:ro
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - tusd
 
   # https://tus.github.io/tusd/
   tusd:
-    image: tusproject/tusd
+    # image: tusproject/tusd
+    build: .
     container_name: tusd
-    command: >
-      -upload-dir /data
-      -behind-proxy
-      -disable-download
+    command: tusd -upload-dir /data -behind-proxy -disable-download -port 8080
     volumes:
       - ./data:/data
+
+  ldap:
+    image: rroemhild/test-openldap
+    container_name: ldap
