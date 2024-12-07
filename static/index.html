@@ -1,56 +1,44 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-blue-100">
 
 <head>
-    <title>Upload</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="./uppy.min.css" rel="stylesheet" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body,
-        html {
-            height: 100%;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-            font-size: 2rem;
-            color: #333;
-        }
-    </style>
+    <title>Uploader</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="shortcut icon" href="/auth/assets/images/favicon.png" type="image/png" />
+    <link rel="icon" href="/auth/assets/images/favicon.png" type="image/png" />
+    <link rel="stylesheet" href="/auth/assets/google-webfonts/roboto.css" />
+    <link rel="stylesheet" href="/auth/assets/line-awesome/line-awesome.css" />
+    <link rel="stylesheet" href="/auth/assets/css/portal.css" />
+    <link rel="stylesheet" href="/uppy.min.css" />
 </head>
 
-<body>
-    <noscript>This app requires JavaScript.</noscript>
-
-    <h1>Upload Files</h1>
-    <div id="drag-drop-area"></div>
+<body class="h-full">
+    <div class="app-page">
+        <div class="app-content">
+            <div class="app-container">
+                <div class="logo-col-box justify-center">
+                    <div>
+                        <img class="logo-img" src="/auth/assets/images/logo.svg" alt="Upload Files" />
+                    </div>
+                    <div>
+                        <h2 class="logo-col-txt">Uploader</h2>
+                    </div>
+                </div>
+                <div class="justify-center">
+                    <p class="app-inp-lbl">Upload files to the landing zone.</p>
+                </div>
+                <div id="drag-drop-area"></div>
+            </div>
+        </div>
+    </div>
 
     <script type="module">
-        import {
-            Uppy,
-            Dashboard,
-            Tus,
-            GoldenRetriever,
-        } from './uppy.min.mjs'
-
+        import { Uppy, Dashboard, Tus, GoldenRetriever } from '/uppy.min.mjs'
         const uppy = new Uppy({ autoProceed: true })
             .use(Dashboard, { inline: true, target: '#drag-drop-area' })
             .use(Tus, { endpoint: 'http://localhost:80/files/' })
             .use(GoldenRetriever)
     </script>
-</body>
 
-</html>
+</body>
