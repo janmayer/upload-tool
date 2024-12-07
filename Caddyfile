@@ -1,14 +1,67 @@
 {
 	admin off
+
+	order authenticate before respond
+
+	security {
+		ldap identity store example.com {
+			realm example.com
+			servers {
+				ldap://ldap:10389
+			}
+			attributes {
+				username uid
+			}
+			username "cn=admin,dc=planetexpress,dc=com"
+			password "GoodNewsEveryone"
+			search_base_dn "ou=people,dc=planetexpress,dc=com"
+			search_filter "(&(|(uid=%s))(objectClass=inetOrgPerson))"
+			groups {
+				"cn=admin_staff,ou=people,dc=planetexpress,dc=com" admin
+				"cn=ship_crew,ou=people,dc=planetexpress,dc=com" crew
+			}
+		}
+
+		authentication portal myportal {
+			crypto default token lifetime 3600
+			crypto key sign-verify {env.JWT_SHARED_KEY}
+			enable identity store example.com
+			cookie domain localhost
+
+			ui {
+				logo url "https://caddyserver.com/resources/images/logo-light.svg"
+				logo description "Caddy"
+				links {
+					"Upload" /
+				}
+			}
+		}
+
+		authorization policy mypolicy {
+			set auth url /auth/
+			allow roles crew
+		}
+	}
 }
 
 http://localhost {
-	root * /static
-	file_server
+	route /auth/* {
+		authenticate with myportal
+	}
 
-	reverse_proxy /files/* tusd:8080 {
-		flush_interval -1
-		request_buffers 0
-		response_buffers 0
+	route /files/* {
+		authorize with mypolicy
+		reverse_proxy tusd:8080 {
+			flush_interval -1
+			request_buffers 0
+			response_buffers 0
+		}
+	}
+
+	route /* {
+		authorize with mypolicy
+		file_server {
+			root /static
+		}
 	}
 }
