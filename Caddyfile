@@ -1,8 +1,10 @@
+# https://caddyserver.com/docs/
 {
 	admin off
 
 	order authenticate before respond
 
+	# https://docs.authcrunch.com/
 	security {
 		ldap identity store futurama {
 			realm futurama
@@ -47,6 +49,8 @@
 }
 
 http://localhost {
+	encode zstd gzip
+
 	route /auth/* {
 		authenticate with myportal
 	}
