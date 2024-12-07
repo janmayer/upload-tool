@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/auth/assets/google-webfonts/roboto.css" />
     <link rel="stylesheet" href="/auth/assets/line-awesome/line-awesome.css" />
     <link rel="stylesheet" href="/auth/assets/css/portal.css" />
-    <link rel="stylesheet" href="/uppy.min.css" />
+    <link rel="stylesheet" href="https://releases.transloadit.com/uppy/v4.8.0/uppy.min.css" />
 </head>
 
 <body class="h-full">
@@ -34,10 +34,10 @@
     </div>
 
     <script type="module">
-        import { Uppy, Dashboard, Tus, GoldenRetriever } from '/uppy.min.mjs'
+        import { Uppy, Dashboard, Tus, GoldenRetriever } from "https://releases.transloadit.com/uppy/v4.8.0/uppy.min.mjs"
         const uppy = new Uppy({ autoProceed: true })
-            .use(Dashboard, { inline: true, target: '#drag-drop-area' })
-            .use(Tus, { endpoint: 'http://localhost:80/files/' })
+            .use(Dashboard, { inline: true, target: "#drag-drop-area" })
+            .use(Tus, { endpoint: "http://localhost:80/files/" })
             .use(GoldenRetriever)
     </script>
 
