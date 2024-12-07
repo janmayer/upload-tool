@@ -4,18 +4,21 @@
 	order authenticate before respond
 
 	security {
-		ldap identity store example.com {
-			realm example.com
+		ldap identity store futurama {
+			realm futurama
 			servers {
 				ldap://ldap:10389
 			}
 			attributes {
+				name cn
+				surname foo
 				username uid
+				email mail
 			}
 			username "cn=admin,dc=planetexpress,dc=com"
 			password "GoodNewsEveryone"
 			search_base_dn "ou=people,dc=planetexpress,dc=com"
-			search_filter "(&(|(uid=%s))(objectClass=inetOrgPerson))"
+			search_filter "(&(uid=%s)(objectClass=inetOrgPerson))"
 			groups {
 				"cn=admin_staff,ou=people,dc=planetexpress,dc=com" admin
 				"cn=ship_crew,ou=people,dc=planetexpress,dc=com" crew
@@ -23,16 +26,17 @@
 		}
 
 		authentication portal myportal {
-			crypto default token lifetime 3600
-			crypto key sign-verify {env.JWT_SHARED_KEY}
-			enable identity store example.com
+			# crypto default token lifetime 3600
+			# crypto key sign-verify {env.JWT_SHARED_KEY}
+			enable identity store futurama
 			cookie domain localhost
 
 			ui {
-				logo url "https://caddyserver.com/resources/images/logo-light.svg"
-				logo description "Caddy"
+				# logo url "https://caddyserver.com/resources/images/logo-light.svg"
+				# logo description "Caddy"
 				links {
-					"Upload" /
+					"Upload Files" / icon "las la-file-upload"
+					"My Identity" "/auth/whoami" icon "las la-user"
 				}
 			}
 		}
