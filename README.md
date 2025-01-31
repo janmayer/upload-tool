@@ -28,3 +28,9 @@ Open [`http://localhost/`](http://localhost/)
     - User `fry` with password `fry` can log in, but does not have the right role and sees `Forbidden`.
     - User `professor` with password `professor` can log in and upload files.
 - File uploads can be paused, resumed, and recovered.
+
+
+## Screenshots
+![Login](docs/login.png)
+![Drag & Drop](docs/dragdrop.png)
+![Upload](docs/upload.png)
